@@ -1,27 +1,9 @@
 % run a crude simulation of fire, with the aim of looking pretty
-function fire()
+function fire(datGlob, nSteps, cMap, imgSize, maxWidth, whiteBg)
 
-  % tidy
-  close all
-  
-  % config
-  nTime = 10 ; % number of time steps
-  nParticles = 2% ; % n streamers
-  nSteps = 52 %100; % streamer length steps
-  cMap = tempScale();
-  border = 32;
-  maxWidth = 10 ; % max half width of streamers
-  particleOrigin = [128+border,220+border];
-  imgSize = 256+2*border;
-  whiteBg = 0 ; % 1:not transparent
-  
-  % check config
-  % showColourMap ( cMap( :,1:3) );
-  
-  % init
-  particles = initFireStreamers(nParticles, particleOrigin);
-  
-  origParticles = particles;
+pFiles = dir(datGlob);
+pFilenames = vertcat(pFiles.name);
+nTime = length(pFiles);
 
 #   figure ;
 #   axis ;
@@ -37,7 +19,9 @@ function fire()
   for t = 1:nTime
   printf("\nt:%i",t)
     % init
-    particles = origParticles;
+    printf("%s\n",pFilenames(t,:));
+    load( pFilenames(t,:), 'particles' );
+    nParticles = length(particles);
     for i = 1:nParticles
       particles(i).pos += particles(i).posWalk* sin(2*pi()*t/nTime);
       particles(i).vel += particles(i).velWalk* sin(2*pi()*t/nTime);

@@ -1,3 +1,4 @@
+% run a crude simulation of fire, with the aim of looking pretty
 function fire()
 
   % tidy
@@ -189,13 +190,5 @@ function cMap = tempScale()
   cMap( : , 2 ) = interp1( i, g, 1:100 );
   cMap( : , 3 ) = interp1( i, b, 1:100 );
   cMap( : , 4 ) = interp1( i, a, 1:100 );
-endfunction
-
-function showColourMap( cMap )
-  figure
-  hold on
-  for i=1:rows(cMap)
-    plot( [0 1], [-i -i], 'color',cMap( i, : ) );
-  endfor
 endfunction
 

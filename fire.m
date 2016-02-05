@@ -5,7 +5,7 @@ function fire()
   
   % config
   nTime = 10 ; % number of time steps
-  nParticles = 20% ; % n streamers
+  nParticles = 2% ; % n streamers
   nSteps = 52 %100; % streamer length steps
   cMap = tempScale();
   border = 32;
@@ -18,10 +18,7 @@ function fire()
   % showColourMap ( cMap( :,1:3) );
   
   % init
-  particles = [];
-  for i = 1:nParticles
-    particles = [particles makeParticle(particleOrigin)];
-  endfor
+  particles = initFireStreamers(nParticles, particleOrigin);
   
   origParticles = particles;
 
@@ -79,20 +76,6 @@ function writeIm( img, alpha, filename)
   imwrite(img,filename,'Alpha',alpha);
 
 endfunction
-
-
-function p = makeParticle( o )
-  p.oldWidth =0;
-  p.oldPos = [0 0];
-  p.pos = (rand(1,2) - 0.5 ) .*[200 32] + [o(1) o(2)]  ; %position
-  p.vel = (rand(1,2)-0.5) * 2 + [0 -1]  ; %velocity
-  p.posWalk = (rand(1,2) - 0.5)*10; % starting conditions change a bit between frames
-  p.velWalk = (rand(1,2) - 0.5)*2;
-  p.temp = rand(1) * 5 + 95 ; %temperature (scale 1-100)
-  p.params.phase=rand(1,2)*6; % params for streamer modulation function
-  p.params.period = rand(1,2)*20+[30 60];
-endfunction
-
 
 function [p keep] = stepParticle( p, midWdith )
   p.oldPos = p.pos; % store old pos for drawing lines

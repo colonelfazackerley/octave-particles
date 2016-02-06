@@ -1,17 +1,17 @@
 % run a crude simulation of fire, with the aim of looking pretty
-function fire(datGlob, nSteps, cMap, imgSize, maxWidth, interactionParams, whiteBg)
+function fire(datGlob, nSteps, cMap, imgSize, maxWidth, interactionParams, pngPrefix, whiteBg)
 
 pFiles = dir(datGlob);
 pFilenames = vertcat(pFiles.name);
-nTime = length(pFiles);
+nTime = length(pFiles)
 
   
   % run
   for t = 1:nTime
     % init
-    printf("%s\n",pFilenames(t,:));
     load( pFilenames(t,:), 'particles' );
     nParticles = length(particles);
+    printf("%s nParticles:%i\n",pFilenames(t,:), nParticles);
     for i = 1:nParticles
       particles(i).pos += particles(i).posWalk* sin(2*pi()*t/nTime);
       particles(i).vel += particles(i).velWalk* sin(2*pi()*t/nTime);
@@ -33,11 +33,11 @@ nTime = length(pFiles);
         toKeep(i) = keep;
         endfor
         particles = particles(toKeep);
-        particles = interact (particles);
+        particles = interact (particles, interactionParams);
         [img alpha particles] = plotParticles( img, alpha, particles, cMap, maxWidth, l, t );
         
     endfor
-    printf("%s\n", imgFilename = sprintf("fire_c_%02i.png",t) );
+    printf("%s\n", imgFilename = sprintf("%s%02i.png",pngPrefix,t) );
     writeIm(img, alpha, imgFilename ,1);
   endfor
   

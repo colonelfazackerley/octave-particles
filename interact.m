@@ -1,5 +1,5 @@
 % change velocities modelling forces between particles
-function particles = interact( particles )
+function particles = interact( particles, interactionParams )
   for i=1:length(particles)
     for j=1:length(particles)
       if j>=i
@@ -7,19 +7,18 @@ function particles = interact( particles )
       endif
       p_i = particles(i);
       p_j = particles(j);
-      if p_i.pos(2)>200 && p_j.pos(2)>200
-        return; % stop interactions too low down. stops
-        % streamers being pushed off the bottom
+      if interactionParams.fExclusionZone(p_i.pos) && interactionParams.fExclusionZone(p_j.pos)
+        continue
       endif
       d = p_i.pos - p_j.pos; % displacement vector
       distsq = sum(d.^2);
-      if distsq > 3000
+      if distsq > interactionParams.distSqLimit
         continue
       endif
-      f = 0.4 * d / distsq ; % force, inverse law
-      
+      f = interactionParams.fForce(distsq,d);
       particles(i).vel += f ;
       particles(j).vel += -f ;
     endfor
   endfor
 endfunction
+

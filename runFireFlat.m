@@ -6,4 +6,8 @@ cMap = tempScale();
 maxWidth = 10 ; % max half width of streamers
 setPage
 
-fire('fire_flat_particles_*.dat', nSteps, cMap, imgSize, maxWidth, whiteBg);
+interactionParams.fExclusionZone = @(pos) pos(2) > 200;
+interactionParams.distSqLimit = 3000;
+interactionParams.fForce = @(distSquared, displacement) 0.4 * displacement / distSquared; 
+
+fire('fire_flat_particles_*.dat', nSteps, cMap, imgSize, maxWidth,interactionParams, whiteBg);

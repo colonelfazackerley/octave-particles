@@ -1,6 +1,6 @@
 setPage
-particleOrigin = [128+border,220+border]
-nStreamers = 10
+particleOrigin = [128+border,250+border] %x, y
+nStreamers = 20
 particles = initFireStreamers(nStreamers, particleOrigin);
 particleFiles=[];
 for i=1:nTime

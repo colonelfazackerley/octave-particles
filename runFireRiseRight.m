@@ -10,13 +10,13 @@ vertOffset = 128;
 
 imgSize += [vertOffset 0]; %imgSize is height, width
 
-pngPrefix = "fire_rise_right_a_";
+pngPrefix = "fire_rise_right_a";
 
 interactionParams.fExclusionZone = @(pos) pos(2) >= 200 + 32 + 128 - pos(1);
 interactionParams.distSqLimit = 3000;
 interactionParams.fForce = @(distSquared, displacement) 0.4 * displacement / distSquared; 
 
-particleParams.fCooling = @(pos) (240 - pos(2))/80 + rand(1)*1
+particleParams.fCooling = @(pos) (265 + 32 + 128 -pos(1) - pos(2))/80 + rand(1)*1
 
 %testPlot(imgSize, border, interactionParams)
 

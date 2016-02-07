@@ -1,5 +1,6 @@
 % run a crude simulation of fire, with the aim of looking pretty
-function fire(datGlob, nSteps, cMap, imgSize, maxWidth, interactionParams, pngPrefix, whiteBg)
+function fire(datGlob, nSteps, cMap, imgSize, maxWidth, ...
+              particleParams, interactionParams, pngPrefix, whiteBg)
 
 pFiles = dir(datGlob);
 pFilenames = vertcat(pFiles.name);
@@ -29,7 +30,7 @@ nTime = length(pFiles)
         
         toKeep=logical(zeros(size(particles )));
         for i=1:length(particles)
-        [ particles(i) keep ] = stepParticle( particles(i), imgSize(2)/2 );
+        [ particles(i) keep ] = stepParticle( particles(i), imgSize(2)/2, particleParams );
         toKeep(i) = keep;
         endfor
         particles = particles(toKeep);

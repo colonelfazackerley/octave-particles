@@ -1,10 +1,10 @@
 % applies forces to particles  that do not depend
 % on other particles.
-function [p keep] = stepParticle( p, midWdith )
+function [p keep] = stepParticle( p, midWdith, particleParams )
   p.oldPos = p.pos; % store old pos for drawing lines
   p.pos += p.vel ; % move
   
-  cooling = (240 - p.pos(2))/80 + rand(1)*1 ;
+  cooling = particleParams.fCooling(p.pos) ;
   p.temp -= cooling;
   if p.temp > 100
     p.temp = 100 ;

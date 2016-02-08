@@ -53,7 +53,7 @@ function writeIm( img, alpha, filename)
   alpha = uint8( alpha * 256);
   
   imwrite(img,filename,'Alpha',alpha);
-
+  imwrite(img,['o_' filename]);
 endfunction
 
 function [img alpha particles] = plotParticles( img, alpha, particles, cMap, maxWidth, length_i, time_i)

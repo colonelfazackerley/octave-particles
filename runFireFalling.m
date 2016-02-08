@@ -6,15 +6,15 @@ cMap = tempScale();
 maxWidth = 10 ; % max half width of streamers
 setPage
 
-pngPrefix = "fire_a_";
+pngPrefix = "fire_falling_a_";
 
 interactionParams.fExclusionZone = @(pos) pos(2) > 200;
 interactionParams.distSqLimit = 3000;
 interactionParams.fForce = @(distSquared, displacement) 0.4 * displacement / distSquared; 
 
-particleParams.fCooling = @(pos) (265 - pos(2))/80 + rand(1)*1
+particleParams.fCooling = @(pos) (265 - pos(2))/80 + rand(1)*0.5
 
-fire('fire_flat_particles_*.dat', nSteps, cMap, imgSize, maxWidth, ...
+fire('fire_falling_particles_*.dat', nSteps, cMap, imgSize, maxWidth, ...
      particleParams, interactionParams, pngPrefix, whiteBg);
      
 

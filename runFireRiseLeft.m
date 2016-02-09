@@ -1,4 +1,4 @@
-function runFireFlat(variant)
+function runFireRiseLeft(variant)
     % config
     nTime = 10 ; % number of time steps
     nSteps = 52 %100; % streamer length steps
@@ -6,18 +6,22 @@ function runFireFlat(variant)
     maxWidth = 10 ; % max half width of streamers
     setPage
 
-    pngPrefix = sprintf("fire_%s_",variant);
+    vertOffset = 128;
+    
+    imgSize(1) = imgSize(1)+vertOffset; %imgSize is height, width
 
-    interactionParams.fExclusionZone = @(pos) pos(2) > 200;
+    pngPrefix = "fire_rise_left_a_";
+
+    interactionParams.fExclusionZone = @(pos) pos(2) >= 200 -256 + 32 + 128 + pos(1);
     interactionParams.distSqLimit = 3000;
     interactionParams.fForce = @(distSquared, displacement) 0.4 * displacement / distSquared; 
 
-    particleParams.fCooling = @(pos) (265 - pos(2))/80 + rand(1)*1
+    particleParams.fCooling = @(pos) (265 - 256 + 32 + 128 +pos(1) - pos(2))/80 
 
-    datGlob = sprintf('fire_flat_particles_%s_*.dat', variant);
+    %testPlot(imgSize, border, interactionParams);
+    datGlob = sprintf('fire_rise_left_particles_%s_*.dat',variant);
     fire(datGlob, nSteps, cMap, imgSize, maxWidth, ...
          particleParams, interactionParams, pngPrefix, whiteBg);
-         
 
     cmd = sprintf("convert -loop 0 -delay 10 o_%s*.png  %s.gif",pngPrefix,pngPrefix);
     printf("%s\n",cmd);

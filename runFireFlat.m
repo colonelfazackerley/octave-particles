@@ -6,7 +6,6 @@ function runFireFlat(variant)
     maxWidth = 10 ; % max half width of streamers
     setPage
 
-    pngPrefix = sprintf("fire_%s_",variant);
 
     interactionParams.fExclusionZone = @(pos) pos(2) > 200;
     interactionParams.distSqLimit = 3000;
@@ -14,6 +13,9 @@ function runFireFlat(variant)
 
     particleParams.fCooling = @(pos) (265 - pos(2))/80 + rand(1)*1
 
+    testPlot(imgSize, border, interactionParams, particleParams);
+    
+    pngPrefix = sprintf("fire_%s_",variant);
     datGlob = sprintf('fire_flat_particles_%s_*.dat', variant);
     fire(datGlob, nSteps, cMap, imgSize, maxWidth, ...
          particleParams, interactionParams, pngPrefix, whiteBg);

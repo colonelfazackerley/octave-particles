@@ -16,7 +16,7 @@ function runFireRiseRight(variant)
     interactionParams.distSqLimit = 3000;
     interactionParams.fForce = @(distSquared, displacement) 0.4 * displacement / distSquared; 
 
-    particleParams.fCooling = @(pos) (265 + 32 + 128 -pos(1) - pos(2))/70
+    particleParams.fCooling = @(pos) (265 + 32 + 128 + 40 -pos(1) - pos(2))/120
 
     testPlot(imgSize, border, interactionParams, particleParams);
     datGlob = sprintf('fire_rise_right_particles_%s_*.dat',variant);

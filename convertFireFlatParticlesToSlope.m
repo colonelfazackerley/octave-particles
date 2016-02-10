@@ -12,6 +12,7 @@ function convertFireFlatParticlesToSlope( variant )
             pos = particles(i).pos;
             pos = pos - [0 (pos(1)-border)] + [ 0 128]; % slope and larger page 
             particles(i).pos = pos;
+            particles(i).origPos = pos;
         endfor
         particleFile = sprintf('fire_rise_right_particles_%s_%02i.dat',variant, t)
         save(particleFile,'particles');
@@ -23,6 +24,7 @@ function convertFireFlatParticlesToSlope( variant )
             
             pos = pos + [0 (pos(1)-border-256)] + [ 0 128]; % slope and larger page 
             particles(i).pos = pos;
+            particles(i).origPos = pos;
         endfor
         particleFile = sprintf('fire_rise_left_particles_%s_%02i.dat',variant, t)
         save(particleFile,'particles');

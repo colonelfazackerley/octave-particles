@@ -25,7 +25,6 @@ function testPlot(imgSize, border, interactionParams, particleParams)
             endfor
         endfor
         contour(X,Y,Z);
-        Z
     endif
     
     plot([border imgSize(2)-border imgSize(2)-border border border], ...

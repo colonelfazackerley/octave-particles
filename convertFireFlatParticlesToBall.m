@@ -28,11 +28,13 @@ function convertFireFlatParticlesToBall( variant )
                     dist    = sqrt(sum(pos - particles(j).pos));
                     if distNew<200 && distNew < dist
                         particles(i).pos = newPos;
+                        particles(i).origPos = newPos;
                         break;
                     endif
                 endfor
             endfor
         endfor
+
         for i=1:nParticles
             pos = particles(i).pos;
             plot(pos(1),pos(2),'r.')

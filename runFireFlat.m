@@ -11,7 +11,7 @@ function runFireFlat(variant)
     interactionParams.distSqLimit = 3000;
     interactionParams.fForce = @(distSquared, displacement) 0.4 * displacement / distSquared; 
 
-    particleParams.fCooling = @(pos) (265 - pos(2))/80 + rand(1)*1
+    particleParams.fCooling = @(pos) @(pos) (80 - pos(2))/80 - rand(1)*2
 
     testPlot(imgSize, border, interactionParams, particleParams);
     

@@ -13,6 +13,7 @@ function p = makeParticle( o )
   p.oldWidth =0;
   p.oldPos = [0 0];
   p.pos = (rand(1,2) - 0.5 ) .*[200 32] + [o(1) o(2)]  ; %position
+  p.origPos = p.pos;
   p.vel = (rand(1,2)-0.5) * 2 + [0 -1]  ; %velocity
   p.posWalk = (rand(1,2) - 0.5)*10; % starting conditions change a bit between frames
   p.velWalk = (rand(1,2) - 0.5)*2;

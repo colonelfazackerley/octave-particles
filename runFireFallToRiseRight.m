@@ -12,7 +12,7 @@ function runFireRiseRight(variant)
 
     pngPrefix = sprintf("fire_fall_to_rise_right_%s_",variant);
 
-    interactionParams.fExclusionZone = @(pos) pos(2) >= 200 + 32 + 128 - pos(1);
+    interactionParams.fExclusionZone = @(x,y) y >= 200 + 32 + 128 - x;
     interactionParams.distSqLimit = 3000;
     interactionParams.fForce = @(distSquared, displacement) 0.4 * displacement / distSquared; 
 

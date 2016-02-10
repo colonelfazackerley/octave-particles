@@ -5,7 +5,7 @@ function testPlot(imgSize, border, interactionParams, particleParams)
         xp=[];yp=[];
         for x=0:10:imgSize(2)
             for y=0:10:imgSize(1)
-                if interactionParams.fExclusionZone([x y])
+                if interactionParams.fExclusionZone(x,y)
                     xp=[xp x];yp=[yp y];
                 endif
             endfor

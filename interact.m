@@ -14,9 +14,6 @@ function particles = interact( particles, interactionParams )
     dY = Ysi - Ysj;
     dSq= dX.^2 + dY.^2;
     
-    fX = interactionParams.fForce( dSq, dX );
-    fY = interactionParams.fForce( dSq, dY );
-    
     diagMask = logical(diag(ones(1,length(particles))));
     
     fX(diagMask)=0; %particles dont interact with themselves
@@ -24,6 +21,17 @@ function particles = interact( particles, interactionParams )
     
     fX(dSq>interactionParams.distSqLimit) = 0;
     fY(dSq>interactionParams.distSqLimit) = 0;
+    
+    % .warning: matrix singular to machine precision, (from here)
+    warning off all local
+    fX = interactionParams.fForce( dSq, dX );
+    fY = interactionParams.fForce( dSq, dY );
+    
+    excZone = interactionParams.fExclusionZone(Xsi,Ysi) & ...
+            interactionParams.fExclusionZone(Xsi,Ysi);
+            
+    fX(excZone)=0;
+    fY(excZone)=0;
     
     sumXf = sum(fX); % all forces on each particle
     sumYf = sum(fY);

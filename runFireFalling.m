@@ -8,7 +8,7 @@ function runFireFalling(variant)
 
     pngPrefix = "fire_falling_a_";
 
-    interactionParams.fExclusionZone = @(pos) pos(2) > 200;
+    interactionParams.fExclusionZone = @(x,y) y > 200;
     interactionParams.distSqLimit = 3000;
     interactionParams.fForce = @(distSquared, displacement) 0.4 * displacement / distSquared; 
 

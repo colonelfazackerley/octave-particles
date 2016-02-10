@@ -10,7 +10,7 @@ function runFireRiseRight(variant)
     
     imgSize(1) = imgSize(1)+vertOffset; %imgSize is height, width
 
-    pngPrefix = "fire_rise_right_a_";
+    pngPrefix = sprintf("fire_rise_right_%s_",variant);
 
     interactionParams.fExclusionZone = @(pos) pos(2) >= 200 + 32 + 128 - pos(1);
     interactionParams.distSqLimit = 3000;

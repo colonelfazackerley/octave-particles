@@ -33,8 +33,29 @@ function convertFireParticlesSlopeTransition( variant )
         endfor
         particleFile = sprintf('fire_fall_to_rise_right_particles_%s_%02i.dat',variant, t)
         save(particleFile,'particles');
-        % left rise
         
+        % left rise 
+        load( fallFiles(t).name, 'particles' );
+        fallPs = particles;
+        load( leftFiles(t).name, 'particles' );
+        slopePs = particles;
+        nParticles = length(particles);
+        for i=1:nParticles
+            fpos = fallPs(i).pos + [ 0 128]; % transform onto larger page [x y]
+            spos = slopePs(i).pos;
+            dirn = spos-fpos ;
+            dist = sqrt(sum(dirn.^2));
+            unitv = dirn/dist;
+            transDist = transSpeed * (t-1);
+            if transDist > dist
+                particles(i).pos = spos; % stop when arrived at final position
+            else
+                particles(i).pos = fpos + unitv * transDist;
+            endif
+            particles(i).origPos = particles(i).pos;
+        endfor
+        particleFile = sprintf('fire_fall_to_rise_left_particles_%s_%02i.dat',variant, t)
+        save(particleFile,'particles');
         
     endfor
 endfunction

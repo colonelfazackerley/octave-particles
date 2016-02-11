@@ -59,6 +59,7 @@ endfunction
 function [img alpha particles] = plotParticles( img, alpha, particles, cMap, maxWidth, length_i, time_i)
   for i=1:length(particles)
     p = particles(i);
+    %particles(i).temp
     colour = cMap(ceil(particles(i).temp), : );
 #     plot( [p.oldPos(1) p.pos(1)], [p.oldPos(2) p.pos(2)], 
 #             'color', colour(1:3),

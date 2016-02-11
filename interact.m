@@ -22,8 +22,6 @@ function particles = interact( particles, interactionParams )
     fX(dSq>interactionParams.distSqLimit) = 0;
     fY(dSq>interactionParams.distSqLimit) = 0;
     
-    % .warning: matrix singular to machine precision, (from here)
-    warning off all local
     fX = interactionParams.fForce( dSq, dX );
     fY = interactionParams.fForce( dSq, dY );
     
@@ -35,6 +33,9 @@ function particles = interact( particles, interactionParams )
     
     sumXf = sum(fX); % all forces on each particle
     sumYf = sum(fY);
+    
+    sumXf(isnan(sumXf))=0;
+    sumYf(isnan(sumYf))=0;
     
     for i=1:length(particles)
         particles(i).vel += [sumXf(i) sumYf(i)];

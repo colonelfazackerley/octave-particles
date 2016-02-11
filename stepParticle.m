@@ -3,8 +3,8 @@
 function [p keep] = stepParticle( p, midWdith, particleParams )
   p.oldPos = p.pos; % store old pos for drawing lines
   p.pos += p.vel ; % move
-  
-  cooling = particleParams.fCooling(p.pos-p.origPos) ;
+
+  cooling = feval( particleParams.fCooling, p.pos-p.origPos ) ;
   p.temp -= cooling;
   if p.temp > 100
     p.temp = 100 ;

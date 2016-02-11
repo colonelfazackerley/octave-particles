@@ -14,9 +14,9 @@ function runFireRiseRight(variant)
 
     interactionParams.fExclusionZone = @(x,y) y >= 200 + 32 + 128 - x;
     interactionParams.distSqLimit = 3000;
-    interactionParams.fForce = @(distSquared, displacement) 0.4 * displacement / distSquared; 
+    interactionParams.fForce = @(distSquared, displacement) 0.4 .* displacement ./ distSquared; 
 
-    particleParams.fCooling = @(pos) @(pos) (80 - pos(2))/80 - rand(1)*2
+    particleParams.fCooling = @(pos) (80 - pos(2))/80 - rand(1)*2
 
     testPlot(imgSize, border, interactionParams, particleParams);
     datGlob = sprintf('fire_rise_right_particles_%s_*.dat',variant);

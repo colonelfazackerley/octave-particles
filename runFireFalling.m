@@ -6,11 +6,11 @@ function runFireFalling(variant)
     maxWidth = 10 ; % max half width of streamers
     setPage
 
-    pngPrefix = "fire_falling_a_";
+    pngPrefix = sprintf("fire_falling_%s_",variant);;
 
     interactionParams.fExclusionZone = @(x,y) y > 200;
     interactionParams.distSqLimit = 3000;
-    interactionParams.fForce = @(distSquared, displacement) 0.4 * displacement / distSquared; 
+    interactionParams.fForce = @(distSquared, displacement) 0.4 .* displacement ./ distSquared; 
 
     particleParams.fCooling = @(pos) (80 - pos(2))/80 - rand(1)*2
 

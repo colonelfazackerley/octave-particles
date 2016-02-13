@@ -1,4 +1,4 @@
-function runFireRiseLeft(variant)
+function runFireFallToRiseLeft(variant)
     % config
     nTime = 10 ; % number of time steps
     nSteps = 52 %100; % streamer length steps

@@ -18,7 +18,7 @@ function convertFireParticlesSlopeTransition( variant )
         slopePs = particles;
         nParticles = length(particles);
         for i=1:nParticles
-            fpos = fallPs(i).pos + [ 0 128]; % transform onto larger page [x y]
+            fpos = fallPs(i).pos ;%+ [ 0 128]; % transform onto larger page [x y]
             spos = slopePs(i).pos;
             dirn = spos-fpos ;
             dist = sqrt(sum(dirn.^2));
@@ -41,7 +41,7 @@ function convertFireParticlesSlopeTransition( variant )
         slopePs = particles;
         nParticles = length(particles);
         for i=1:nParticles
-            fpos = fallPs(i).pos + [ 0 128]; % transform onto larger page [x y]
+            fpos = fallPs(i).pos ;%+ [ 0 128]; % transform onto larger page [x y]
             spos = slopePs(i).pos;
             dirn = spos-fpos ;
             dist = sqrt(sum(dirn.^2));

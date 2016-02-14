@@ -24,19 +24,22 @@ nTime = length(pFiles)
         img = zeros([ imgSize 3]);
         alpha = zeros(imgSize);
     endif
-    
     for l = 1:nSteps % iterate along length of streamers
+        tic
         printf(".");
-        
         toKeep=logical(zeros(size(particles )));
+        printf("(made toKeep:%.3f)",toc());
         for i=1:length(particles)
-        [ particles(i) keep ] = stepParticle( particles(i), imgSize(2)/2, particleParams );
-        toKeep(i) = keep;
+            [ particles(i) keep ] = stepParticle( particles(i), imgSize(2)/2, particleParams );
+            toKeep(i) = keep;
         endfor
+        printf("(stepped all:%.3f)",toc());
         particles = particles(toKeep);
+        printf("(kept some:%.3f)",toc());
         particles = interact (particles, interactionParams);
+        printf("(interact:%.3f)",toc());
         [img alpha particles] = plotParticles( img, alpha, particles, cMap, maxWidth, l, t );
-        
+        printf("(setting pix:%.3f)",toc());
     endfor
     printf("%s\n", imgFilename = sprintf("%s%02i.png",pngPrefix,t) );
     writeIm(img, alpha, imgFilename ,1);
@@ -56,53 +59,5 @@ function writeIm( img, alpha, filename)
   imwrite(img,['o_' filename]);
 endfunction
 
-function [img alpha particles] = plotParticles( img, alpha, particles, cMap, maxWidth, length_i, time_i)
-  for i=1:length(particles)
-    p = particles(i);
-    %particles(i).temp
-    colour = cMap(ceil(particles(i).temp), : );
-#     plot( [p.oldPos(1) p.pos(1)], [p.oldPos(2) p.pos(2)], 
-#             'color', colour(1:3),
-#             'linewidth', 5 );
-    
-    wid = maxWidth * widthMod( length_i, time_i, p.params ); 
-    
-    [img alpha] = setLine( img, alpha, ...
-                           p.oldPos, p.pos,  ...
-                           colour, p.oldWidth, wid );
-    particles(i).oldWidth = wid;
-   
-  endfor
-endfunction
-
-function [img alpha] = setPixelSingle(img, alpha, x,y, colour)
-  px = ceil(x);
-  py = ceil(y); 
-  if px > 0 && px < columns(alpha) && py > 0 && py < rows(alpha)
-    img( py , px , : ) = colour(1:3);
-    alpha( py, px ) += colour(4);
-  endif
-endfunction
-
-function [img alpha] = ...
-     setLine( img, alpha, p1, p2,  colour, oldWid, wid)
-  if 0 == oldWid
-    return;
-  endif
-  d = p2 -p1; % displacement vector
-  l = sqrt(sum(d.^2)); % length of displacement vector
-  du = d / l ; % unit vector
-  dun = [du(2)  -du(1)]; % normal to unit vector, for thickening line
-
-  s = 0.5; % a little bit less than 1 to avoid holes in the line
-  for i = 0:s:l
-    p = p1 + du * i ;
-    iWid = interp1([0 l], [oldWid wid], i); % interpolated width
-    for j = -iWid:s:iWid  % thicken line by drawing row of points
-      pa = p + dun * j;
-      [img alpha] = setPixelSingle ( img, alpha, pa(1), pa(2), colour);
-    end
-  endfor
-endfunction
 
 

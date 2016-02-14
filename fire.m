@@ -6,6 +6,7 @@ pFiles = dir(datGlob);
 pFilenames = vertcat(pFiles.name);
 nTime = length(pFiles)
 
+timingOutput = 0;
   
   % run
   for t = 1:nTime
@@ -24,40 +25,35 @@ nTime = length(pFiles)
         img = zeros([ imgSize 3]);
         alpha = zeros(imgSize);
     endif
+    outerTic=tic();
     for l = 1:nSteps % iterate along length of streamers
-        tic
+        timingString ="";
+        innerTic=tic();
         printf(".");
         toKeep=logical(zeros(size(particles )));
-        printf("(made toKeep:%.3f)",toc());
+        timingString = [timingString sprintf("(made toKeep:%.3f)",toc(innerTic))];
         for i=1:length(particles)
             [ particles(i) keep ] = stepParticle( particles(i), imgSize(2)/2, particleParams );
             toKeep(i) = keep;
         endfor
-        printf("(stepped all:%.3f)",toc());
+        timingString = [timingString sprintf("(stepped all:%.3f)",toc(innerTic))];
         particles = particles(toKeep);
-        printf("(kept some:%.3f)",toc());
+        timingString = [timingString sprintf("(kept some:%.3f)",toc(innerTic))];
         particles = interact (particles, interactionParams);
-        printf("(interact:%.3f)",toc());
+        timingString = [timingString sprintf("(interact:%.3f)",toc(innerTic))];
         [img alpha particles] = plotParticles( img, alpha, particles, cMap, maxWidth, l, t );
-        printf("(setting pix:%.3f)",toc());
+        timingString = [timingString sprintf("(setting pix:%.3f)",toc(innerTic))];
+        if timingOutput
+            printf("%s",timingString);
+        endif
     endfor
-    printf("%s\n", imgFilename = sprintf("%s%02i.png",pngPrefix,t) );
+    printf("%04.1fs %s\n", toc(outerTic), imgFilename = sprintf("%s%02i.png",pngPrefix,t) );
     writeIm(img, alpha, imgFilename ,1);
   endfor
   
 endfunction
 
-function writeIm( img, alpha, filename)
 
-  warning off Octave:GraphicsMagic-Quantum-Depth
-
-  img =   uint8( img * 256 );
-  alpha(alpha>1) = 1;
-  alpha = uint8( alpha * 256);
-  
-  imwrite(img,filename,'Alpha',alpha);
-  imwrite(img,['o_' filename]);
-endfunction
 
 
 

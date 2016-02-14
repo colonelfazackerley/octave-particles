@@ -20,4 +20,5 @@ function p = makeParticle( o )
   p.temp = rand(1) * 5 + 95 ; %temperature (scale 1-100)
   p.params.phase=rand(1,2)*6; % params for streamer modulation function
   p.params.period = rand(1,2)*20+[30 60];
+  p.mask=[];
 endfunction

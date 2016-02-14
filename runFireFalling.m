@@ -12,7 +12,7 @@ function runFireFalling(variant)
     interactionParams.distSqLimit = 3000;
     interactionParams.fForce = @(distSquared, displacement) 0.4 .* displacement ./ distSquared; 
 
-    particleParams.fCooling = @(pos) (80 - pos(2))/80 - rand(1)*2
+    particleParams.fCooling = @(pos) (80 - pos(2))/80 - 1
 
     datGlob = sprintf('fire_falling_particles_%s_*.dat',variant)
     fire(datGlob, nSteps, cMap, imgSize, maxWidth, ...

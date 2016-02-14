@@ -18,9 +18,14 @@ function [img alpha particles] = plotParticles( img, alpha, particles, cMap, max
     
     wid = maxWidth * widthMod( length_i, time_i, p.params ); 
     
-    [img alpha] = fillTrapezium( img, alpha, ...
+    if length(particles(i).mask) == 0
+        particles(i).mask = zeros(rows(alpha),columns(alpha));
+    endif
+    
+    [img alpha mask] = fillTrapezium( img, alpha, particles(i).mask, ...
                            p.oldPos, p.pos,  ...
                            colour, p.oldWidth, wid );
+    particles(i).mask = mask;
     particles(i).oldWidth = wid;
    
   endfor

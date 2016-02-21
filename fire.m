@@ -1,6 +1,6 @@
 % run a crude simulation of fire, with the aim of looking pretty
 function fire(datGlob, nSteps, cMap, imgSize, maxWidth, ...
-              particleParams, interactionParams, pngPrefix, whiteBg)
+              particleParams, interactionParams, pngPrefix)
 
 pFiles = dir(datGlob);
 pFilenames = vertcat(pFiles.name);
@@ -18,13 +18,10 @@ timingOutput = 0;
       particles(i).pos += particles(i).posWalk* sin(2*pi()*t/nTime);
       particles(i).vel += particles(i).velWalk* sin(2*pi()*t/nTime);
     endfor
-    if whiteBg
-        img = ones([ imgSize 3]); % height, width, rgb
-        alpha = ones(imgSize);
-    else
-        img = zeros([ imgSize 3]);
-        alpha = zeros(imgSize);
-    endif
+
+    img = zeros([ imgSize 3]);
+    alpha = zeros(imgSize);
+
     outerTic=tic();
     for l = 1:nSteps % iterate along length of streamers
         timingString ="";

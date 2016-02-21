@@ -1,5 +1,5 @@
 % create a fiery colour map
-function cMap = tempScale()
+function cMap = fireTempScale()
 
   %    grey black red red    orange whitish yellow red
   r = [0.5  0     1   1      1      1       1      1   ];

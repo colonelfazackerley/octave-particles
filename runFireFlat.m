@@ -1,20 +1,10 @@
 function runFireFlat(variant)
-    % config
-    nTime = 10 ; % number of time steps
-    nSteps = 52 %100; % streamer length steps
-    cMap = tempScale();
-    maxWidth = 10 ; % max half width of streamers
-    setPage
-
-
-    interactionParams.fExclusionZone = @(x,y) y > 200;
-    interactionParams.distSqLimit = 3000;
-    interactionParams.fForce = @(distSquared, displacement) 0.4 .* displacement ./ distSquared; 
-
-    particleParams.fCooling = @(pos) (80 - pos(2))/80 - 1
-
-    testPlot(imgSize, border, interactionParams, particleParams);
     
+    setPage
+    setFireParams
+    % override exclusionZone
+    interactionParams.fExclusionZone = @(x,y) y > 200;
+
     pngPrefix = sprintf("fire_%s_",variant);
     datGlob = sprintf('fire_flat_particles_%s_*.dat', variant);
     fire(datGlob, nSteps, cMap, imgSize, maxWidth, ...
